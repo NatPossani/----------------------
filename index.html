@@ -1070,19 +1070,47 @@
     }
 
     // ===== ENVIAR CONFIRMACAO (RSVP) =====
+    // COLE AQUI A URL DO SEU GOOGLE APPS SCRIPT (veja instrucoes no README)
+    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwkebf5NHl1T86SnfFid4G8-LNGyaEhdLKTqmaQx6uLM3doEg0uqBnov29MMICL5PMkbg/exec';
+
     function enviarConfirmacao(event) {
       event.preventDefault();
 
-      // Aqui voce pode integrar com um servico de backend,
-      // Google Forms, Formspree, EmailJS, etc.
-      // Por enquanto, apenas mostra a mensagem de sucesso.
-
       const form = document.getElementById('formRSVP');
       const msgSucesso = document.getElementById('msgSucesso');
+      const btnSubmit = form.querySelector('.btn-confirmar');
 
-      form.style.display = 'none';
-      msgSucesso.style.display = 'block';
-      msgSucesso.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      // Desabilita o botao e mostra loading
+      btnSubmit.disabled = true;
+      btnSubmit.innerHTML = '<i class="bi bi-hourglass-split me-2"></i>Enviando...';
+
+      // Coleta os dados do formulario
+      const dados = {
+        nome: document.getElementById('nome').value,
+        email: document.getElementById('email').value,
+        telefone: document.getElementById('telefone').value,
+        acompanhantes: document.getElementById('acompanhantes').value,
+        presenca: document.getElementById('presenca').value,
+        mensagem: document.getElementById('mensagem').value
+      };
+
+      // Envia para o Google Sheets
+      fetch(GOOGLE_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(dados)
+      })
+      .then(() => {
+        form.style.display = 'none';
+        msgSucesso.style.display = 'block';
+        msgSucesso.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      })
+      .catch(() => {
+        alert('Ocorreu um erro ao enviar. Por favor, tente novamente.');
+        btnSubmit.disabled = false;
+        btnSubmit.innerHTML = '<i class="bi bi-heart-fill me-2"></i>Confirmar Presenca';
+      });
     }
 
     // ===== FECHAR MENU MOBILE AO CLICAR EM LINK =====
