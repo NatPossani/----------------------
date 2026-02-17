@@ -443,6 +443,112 @@
       color: var(--cor-branco);
     }
 
+    /* ===== AVISOS (COMICO) ===== */
+    .avisos {
+      background-color: var(--cor-fundo-claro);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .avisos::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--cor-secundaria), var(--cor-dourado), var(--cor-primaria));
+    }
+
+    .avisos-abertura {
+      max-width: 650px;
+      margin: 0 auto 50px;
+      text-align: center;
+      font-size: 1.1rem;
+      color: var(--cor-texto-claro);
+      line-height: 1.8;
+      font-style: italic;
+    }
+
+    .avisos-grid {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .aviso-card {
+      background: var(--cor-branco);
+      border-radius: 16px;
+      padding: 35px 30px;
+      box-shadow: 0 6px 25px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .aviso-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.1);
+    }
+
+    .aviso-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--cor-dourado);
+      border-radius: 4px 0 0 4px;
+    }
+
+    .aviso-icone {
+      font-size: 2.2rem;
+      margin-bottom: 15px;
+      display: block;
+    }
+
+    .aviso-card h4 {
+      font-family: var(--fonte-titulo);
+      color: var(--cor-primaria);
+      font-size: 1.3rem;
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+
+    .aviso-card p {
+      color: var(--cor-texto-claro);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      margin-bottom: 0;
+    }
+
+    .aviso-card p strong {
+      color: var(--cor-texto);
+    }
+
+    .avisos-fechamento {
+      max-width: 650px;
+      margin: 50px auto 0;
+      text-align: center;
+      padding: 35px;
+      background: linear-gradient(135deg, var(--cor-primaria), var(--cor-dourado));
+      border-radius: 16px;
+      color: var(--cor-branco);
+    }
+
+    .avisos-fechamento p {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      margin-bottom: 0;
+      opacity: 0.95;
+    }
+
+    .avisos-fechamento .bi {
+      font-size: 1.5rem;
+      display: block;
+      margin-bottom: 12px;
+    }
+
     /* ===== CONFIRMACAO (RSVP) ===== */
     .confirmacao {
       background-color: var(--cor-branco);
@@ -621,6 +727,30 @@
         padding: 30px 20px;
       }
 
+      .avisos-abertura {
+        font-size: 1rem;
+      }
+
+      .aviso-card {
+        padding: 25px 20px;
+      }
+
+      .aviso-icone {
+        font-size: 1.8rem;
+      }
+
+      .aviso-card h4 {
+        font-size: 1.15rem;
+      }
+
+      .avisos-fechamento {
+        padding: 25px 20px;
+      }
+
+      .avisos-fechamento p {
+        font-size: 0.95rem;
+      }
+
       .mensagem-texto {
         font-size: 1.3rem;
       }
@@ -655,6 +785,7 @@
           <li class="nav-item"><a class="nav-link" href="#evento">Evento</a></li>
           <li class="nav-item"><a class="nav-link" href="#galeria">Galeria</a></li>
           <li class="nav-item"><a class="nav-link" href="#presentes">Presentes</a></li>
+          <li class="nav-item"><a class="nav-link" href="#avisos">Avisos</a></li>
           <li class="nav-item"><a class="nav-link" href="#confirmacao">Confirmar</a></li>
         </ul>
       </div>
@@ -895,6 +1026,101 @@
       </div>
     </div>
   </section> 
+
+  <!-- ==================== AVISOS IMPORTANTES (COM HUMOR) ==================== -->
+  <section class="avisos" id="avisos">
+    <div class="container">
+      <div class="text-center">
+        <h2 class="secao-titulo">Antes de Confirmar...</h2>
+        <div class="separador"></div>
+      </div>
+
+      <div class="avisos-abertura fade-in">
+        <p>
+          Essa pagina existe por amor.<br>
+          Amor aos convidados.<br>
+          Amor aos noivos.<br>
+          E principalmente amor a evitar situacoes<br>
+          desconfortaveis no dia do evento.
+        </p>
+      </div>
+
+      <div class="avisos-grid">
+        <div class="row g-4">
+
+          <!-- Convites -->
+          <div class="col-md-6">
+            <div class="aviso-card fade-in">
+              <span class="aviso-icone">&#128233;</span>
+              <h4>Convites</h4>
+              <p>
+                <strong>Convidado nao convida.</strong><br>
+                Se voce recebeu, e voce.<br>
+                Se nao recebeu... seguimos amigos.
+              </p>
+            </div>
+          </div>
+
+          <!-- Roupas -->
+          <div class="col-md-6">
+            <div class="aviso-card fade-in">
+              <span class="aviso-icone">&#128151;</span>
+              <h4>Roupas</h4>
+              <p>
+                <strong>Branco e exclusivo da noiva.</strong><br>
+                Off-white, bege, "branco quebrado", "quase branco" e "juro que e champanhe" entram no mesmo pacote: <strong>melhor nao.</strong>
+              </p>
+            </div>
+          </div>
+
+          <!-- Presentes -->
+          <div class="col-md-6">
+            <div class="aviso-card fade-in">
+              <span class="aviso-icone">&#127873;</span>
+              <h4>Presentes</h4>
+              <p>
+                <strong>Presenca e o principal presente.</strong><br>
+                O resto e carinho, mimo e pontos extras no nosso coracao.
+              </p>
+            </div>
+          </div>
+
+          <!-- Clima -->
+          <div class="col-md-6">
+            <div class="aviso-card fade-in">
+              <span class="aviso-icone">&#127881;</span>
+              <h4>Clima</h4>
+              <p>
+                Vai ser leve. Vai ter risada. Vai ter emocao.<br>
+                <strong>Climinha estranho nao faz parte da programacao oficial.</strong>
+              </p>
+            </div>
+          </div>
+
+          <!-- Opinioes -->
+          <div class="col-md-6 offset-md-3">
+            <div class="aviso-card fade-in">
+              <span class="aviso-icone">&#129296;</span>
+              <h4>Opinioes</h4>
+              <p>
+                <strong>Opinioes nao solicitadas</strong> ficam guardadas com carinho em casa.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="avisos-fechamento fade-in">
+        <i class="bi bi-emoji-laughing"></i>
+        <p>
+          Tudo isso e so pra deixar claro que o dia e sobre <strong>celebrar, rir e aproveitar.</strong><br>
+          Agora sim, pode confirmar sua presenca sem medo e com bom humor.
+        </p>
+      </div>
+
+    </div>
+  </section>
 
   <!-- ==================== CONFIRMACAO DE PRESENCA ==================== -->
   <section class="confirmacao" id="confirmacao">
