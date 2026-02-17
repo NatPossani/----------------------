@@ -922,13 +922,61 @@
         </div>
 
         <div class="mb-4">
-          <label for="acompanhantes" class="form-label">Numero de Acompanhantes</label>
-          <select class="form-select" id="acompanhantes">
-            <option value="0">Irei sozinho(a)</option>
-            <option value="1">1 acompanhante</option>
-            <option value="2">2 acompanhantes</option>
-            <option value="3">3 acompanhantes</option>
+          <label for="temCriancas" class="form-label">Tera criancas?</label>
+          <select class="form-select" id="temCriancas" onchange="toggleCriancas()">
+            <option value="nao">Nao</option>
+            <option value="sim">Sim</option>
           </select>
+        </div>
+
+        <div id="idadesCriancasContainer" class="mb-4" style="display: none;">
+          <label class="form-label mb-3">Quantas criancas em cada faixa etaria?</label>
+
+          <div class="row g-3">
+            <div class="col-12">
+              <div class="d-flex align-items-center justify-content-between p-2" style="background: var(--cor-fundo-claro); border-radius: 8px;">
+                <span style="color: var(--cor-texto-claro); font-size: 0.95rem;">0 a 3 anos</span>
+                <select class="form-select" id="criancas_0a3" style="width: 80px;" onchange="validarTotalCriancas()">
+                  <option value="0">0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="d-flex align-items-center justify-content-between p-2" style="background: var(--cor-fundo-claro); border-radius: 8px;">
+                <span style="color: var(--cor-texto-claro); font-size: 0.95rem;">4 a 8 anos</span>
+                <select class="form-select" id="criancas_4a8" style="width: 80px;" onchange="validarTotalCriancas()">
+                  <option value="0">0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="d-flex align-items-center justify-content-between p-2" style="background: var(--cor-fundo-claro); border-radius: 8px;">
+                <span style="color: var(--cor-texto-claro); font-size: 0.95rem;">9 a 12 anos</span>
+                <select class="form-select" id="criancas_9a12" style="width: 80px;" onchange="validarTotalCriancas()">
+                  <option value="0">0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div id="totalCriancasInfo" class="mt-2" style="font-size: 0.85rem; color: var(--cor-texto-claro);">
+            Total: 0 crianca(s)
+          </div>
         </div>
 
         <div class="mb-4">
@@ -1069,9 +1117,33 @@
       });
     }
 
+    // ===== TOGGLE CRIANCAS =====
+    function toggleCriancas() {
+      const temCriancas = document.getElementById('temCriancas').value;
+      const container = document.getElementById('idadesCriancasContainer');
+
+      if (temCriancas === 'sim') {
+        container.style.display = 'block';
+      } else {
+        container.style.display = 'none';
+        document.getElementById('criancas_0a3').value = '0';
+        document.getElementById('criancas_4a8').value = '0';
+        document.getElementById('criancas_9a12').value = '0';
+        validarTotalCriancas();
+      }
+    }
+
+    function validarTotalCriancas() {
+      const c1 = parseInt(document.getElementById('criancas_0a3').value);
+      const c2 = parseInt(document.getElementById('criancas_4a8').value);
+      const c3 = parseInt(document.getElementById('criancas_9a12').value);
+      const total = c1 + c2 + c3;
+      document.getElementById('totalCriancasInfo').textContent = 'Total: ' + total + ' crianca(s)';
+    }
+
     // ===== ENVIAR CONFIRMACAO (RSVP) =====
     // COLE AQUI A URL DO SEU GOOGLE APPS SCRIPT (veja instrucoes no README)
-    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwkebf5NHl1T86SnfFid4G8-LNGyaEhdLKTqmaQx6uLM3doEg0uqBnov29MMICL5PMkbg/exec';
+    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby7Ncbk-eiDXzPXLvQzcrwEPO76nQ74jay6qA_7nl6qGt4EghKA42hKEEgIkcKaGfbORQ/exec';
 
     function enviarConfirmacao(event) {
       event.preventDefault();
@@ -1079,6 +1151,17 @@
       const form = document.getElementById('formRSVP');
       const msgSucesso = document.getElementById('msgSucesso');
       const btnSubmit = form.querySelector('.btn-confirmar');
+
+      const temCriancas = document.getElementById('temCriancas').value;
+      const c0a3 = temCriancas === 'sim' ? parseInt(document.getElementById('criancas_0a3').value) : 0;
+      const c4a8 = temCriancas === 'sim' ? parseInt(document.getElementById('criancas_4a8').value) : 0;
+      const c9a12 = temCriancas === 'sim' ? parseInt(document.getElementById('criancas_9a12').value) : 0;
+      const totalCriancas = c0a3 + c4a8 + c9a12;
+
+      if (temCriancas === 'sim' && totalCriancas === 0) {
+        alert('Voce indicou que tera criancas, por favor informe a quantidade em cada faixa etaria.');
+        return;
+      }
 
       // Desabilita o botao e mostra loading
       btnSubmit.disabled = true;
@@ -1089,7 +1172,11 @@
         nome: document.getElementById('nome').value,
         email: document.getElementById('email').value,
         telefone: document.getElementById('telefone').value,
-        acompanhantes: document.getElementById('acompanhantes').value,
+        temCriancas: temCriancas,
+        criancas_0a3: c0a3,
+        criancas_4a8: c4a8,
+        criancas_9a12: c9a12,
+        totalCriancas: totalCriancas,
         presenca: document.getElementById('presenca').value,
         mensagem: document.getElementById('mensagem').value
       };
